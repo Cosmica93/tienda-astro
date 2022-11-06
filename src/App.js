@@ -4,6 +4,7 @@ import {ItemListContainer} from "./components/ItemListContainer/ItemListContaine
 import {ItemDetailContainer} from "./components/ItemDetailContainer/ItemDetailContainer";
 import {Books} from "./components/Books/Books";
 import {Courses} from "./components/Courses/Courses";
+import { CartContainer } from './components/CartContainer/CartContainer';
 
 function App() {
   return (
@@ -14,9 +15,7 @@ function App() {
         <Route exact path="/item/:itemId" element={<ItemDetailContainer/>} />
         <Route exact path="/books" element={<Books/>} />
         <Route exact path="/courses" element={<Courses/>} />
-
-
-
+        <Route exact path="/cart" element={<CartContainer/>} />
       </Routes>
     </BrowserRouter>
   );
