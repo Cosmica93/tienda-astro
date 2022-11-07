@@ -1,45 +1,34 @@
-import React, {useEffect, useState} from "react";
+import { useState, useEffect } from "react";
+import './ItemDetailContainer.css';
+import { arregloProductos } from "../../baseDatos/baseDatos";
+import { ItemDetail } from "../ItemDetail/ItemDetail";
 import {useParams} from "react-router-dom";
-import {getProductById} from "../../database/getProductById";
-import {Layout} from "../Layout/Layout";
 
-export const ItemDetailContainer = () => {
+export const ItemDetailContainer = ()=>{
+    const [item, setItem] =useState({});
 
-  const {itemId} = useParams();
-
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-
-    setLoading(true);
-    setProduct(null);
-
-    getProductById(itemId)
-      .then((product) => {
-        if (product) {
-          setProduct(product)
-        }
-        setLoading(false)
+    const getItem =(id)=>{
+      return new Promise((resolve, reject) => {
+        const item = arregloProductos.find(item=>item.id === parse(id));
+        resolve(item)
       })
-      .catch((e) => {
-        console.log(e)
-        setLoading(false)
-      })
-  }, [])
-  return (
-    <Layout>
-      {loading && <p>Cargando...</p>}
-      {product &&
-        <>
-          <h1>Detalle del producto</h1>
-          {product &&
-            <div>
-              {product?.title}
-            </div>
-          }
-        </>
+    }
+
+    useEffect(()=>{
+      const getProducto = async()=>{
+          const productos = await promesa;
+          console.log('productos', productos);
+          const producto = productos.find(elemento=>elemento.id === parseInt(id));
+          console.log("producto", producto)
+          setItemProduct(producto);
       }
-    </Layout>
+      getProducto();
+  },[id])
+
+  return(
+      <div className="item-detail-container">
+          <p style={{width:"100%", color: "white"}}>item detail container</p>
+          <ItemDetail item={itemProduct}/>
+      </div>
   )
 }
