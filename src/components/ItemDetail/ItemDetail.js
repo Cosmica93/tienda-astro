@@ -1,28 +1,32 @@
-import './ItemDetail.css';
+import { useState } from 'react';
+import { CartWidget } from '../CartWidget/CartWidget';
 import { ItemCount } from '../ItemCount/ItemCount';
-import { useContext } from 'react';
-import { CartContainer } from '../CartContainer/CartContainer';
-import { CartContext } from '../../contexts/CartContext';
+import './ItemDetail.css';
 
-export const ItemDetail = ({ item })=>{
-    const {addProduct} =useContext(CartContainer);
+export const ItemDetail = ({item})=>{
+    const [contador, setContador] = useState(0);
 
-
-    const agregarProducto = (quantity)=>{
-        console.log(quantity);
-        addProduct(item, quantity);
+    const addProduct = (variable1)=>{
+        console.log("count", variable1);
+        setContador(variable1);
     }
-    return (
+
+    const mostrarTexto = ()=>{
+
+    }
+
+    return(
         <div className='detail-container'>
-            <p style={{ width: "100%" }}>item detail</p>
+            <p style={{width: "100%"}}>item detail</p>
             <div className='img-container'>
-                <img src={item.pictureUrl} alt={item.title} />
+                <img src={item.pictureUrl} alt={item.title}/>
             </div>
             <div className='img-container'>
                 <h4>{item.title}</h4>
                 <h5>$ {item.price}</h5>
             </div>
-            <ItemCount stock={5} initial={1} onAdd={agregarProducto}/>
+            <p>productos agregados: {contador}</p>
+            <ItemCount stock={10} initial={1} onAdd={addProduct} showText={mostrarTexto}/>
         </div>
     )
-} 
+}

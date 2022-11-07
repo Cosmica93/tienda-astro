@@ -5,14 +5,14 @@ import { ItemDetail } from "../ItemDetail/ItemDetail";
 import {useParams} from "react-router-dom";
 
 export const ItemDetailContainer = ()=>{
-    const [item, setItem] =useState({});
+  const {id} = useParams(); //{id:"8"}
+  const [itemProduct, setItemProduct] = useState({});
 
-    const getItem =(id)=>{
-      return new Promise((resolve, reject) => {
-        const item = arregloProductos.find(item=>item.id === parse(id));
-        resolve(item)
-      })
-    }
+  const promesa = new Promise((resolve, reject)=>{
+      setTimeout(() => {
+          resolve(arregloProductos);
+      }, 2000);
+  })
 
     useEffect(()=>{
       const getProducto = async()=>{
