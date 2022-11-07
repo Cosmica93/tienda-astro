@@ -5,7 +5,6 @@ export const CartWitdget =()=>{
     return(
         <div>
             <FontAwesomeIcon icon={faCartShopping}/>
-            <span>8</span>
         </div>
     )
 }

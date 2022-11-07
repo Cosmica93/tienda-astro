@@ -1,53 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {useLocation, useParams} from "react-router-dom";
-import {getProducts} from "../../database/getProducts";
-import {ProductsList} from "../ProductsList/ProductsList";
-import {Layout} from "../Layout/Layout";
+import {useEffect, useState} from 'react';
+import {useParams} from "react-router-dom";
+import { arregloProductos } from "../../database/database";
+import { ItemList } from "../ItemList/itemList";
 
-export const ItemListContainer = () => {
+export const ItemListContainer = ()=>{
+    console.log(useParams()); // {categoryName:""}
+    // const categoryName = useParams().categoryName;
+    const {categoryId} = useParams();
+    // console.log(categoryName);
+    const [productos, setProductos] = useState([]);
 
-  // Se obtiene el parametro categoryId de la url
-  const params = useParams();
+    const promesa = new Promise((resolve, reject)=>{
+        setTimeout(() => {
+            resolve(arregloProductos);
+        }, 2000);
+    })
 
-  // Se inicializa el array de productos con su estado inicial como null
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
+    useEffect(()=>{
+        promesa.then((response)=>{
+            if(categoryId){
+                //vamos a filtrar por categoria
+                const productsFiltered = response.filter(elm=>elm.categoria === categoryId);
+                setProductos(productsFiltered);
+            } else{
+                //mostrar todos los productos
+                setProductos(response)
+            }
+        })
+    },[categoryId])
 
-  useEffect(() => {
-
-    setLoading(true)
-    setProducts(null)
-    // Obtenemos los productos
-    getProducts()
-      .then((products) => {
-        // Verificamos si existe el parametro categoryId
-        if (params?.categoryId) {
-          // Filtramos el array de productos por el id de la categoria obtenida por el parametro categoryId de la url
-          const productsFiltered = products.filter(product => product.category === params?.categoryId);
-          // Guardamos el array de productos filtrados por la categoria actual
-          setProducts(productsFiltered);
-          setLoading(false)
-        } else {
-          // Guardamos el array de productos
-          setProducts(products);
-          setLoading(false)
-        }
-      })
-      .catch((e) => {
-        console.log(e)
-        setLoading(false)
-      })
-
-
-  }, [params])
-
-  return (
-    <Layout>
-      {loading && <p>Cargando...</p>}
-
-      {products &&
-        <ProductsList products={products}/>
-      }
-    </Layout>
-  )
+    console.log("productos", productos);
+    return(
+        <div className="item-list-container">
+            <p>item list container</p>
+            <ItemList items={productos} otraPropiedad={123}/>
+        </div>
+    )
 }

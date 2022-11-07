@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { CartWidget } from '../CartWidget/CartWidget';
 import { ItemCount } from '../ItemCount/ItemCount';
-import './ItemDetail.css';
 
 export const ItemDetail = ({item})=>{
     const [contador, setContador] = useState(0);
