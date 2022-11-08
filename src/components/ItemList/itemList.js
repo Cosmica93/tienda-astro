@@ -1,4 +1,5 @@
-import { Item } from "../Item/Item"
+import { Item } from "../Item/Item";
+import React from 'react';
 
 
 export const ItemList = ({items, otraPropiedad})=>{
@@ -8,7 +9,7 @@ export const ItemList = ({items, otraPropiedad})=>{
 
     return(
         <div className="estilos-listado">
-            <div style={{width:"100%"}}>item list</div>
+            <div>item list</div>
             {
                 items.map(producto=>(
                     <Item key={producto.id} item={producto}/>
